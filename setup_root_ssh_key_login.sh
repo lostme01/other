@@ -6,13 +6,15 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
-# 提示用户输入公钥
-read -p "请输入您的公钥: " user_pubkey
+# 默认公钥
+default_pubkey="ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAgEAtbgAwT4Djc+jl85uyCSYjLuhRD1jk4MTATeOTYhzXvW4oRkq0rB1aTrmC6o2Ly3xUWGirKEhkNOEMk0+E0rPbG5uTKnGyoBC1J8/2Kd56BtsJpltFedC9vrNj9GfuxSmrMkikN2JmuOyDfqg1wXbPqKmOXOnGGXe5zAFcqCQPG3orLEtmjyO3Xmda2toafyzGTCC8fVPLSv6lRsbYWpLqFaWd4gJDaH8kP6Vijx5pPgq88NAGzG4AlDZoETayYCAb7yo9Q2cqvOYWa6vilDeoQiASPCgY7/mIrE7PqaDQCTFl3RQyKzl2bT6W+xDH12kM3BktN2iFD+HQ4LGnK1WYfQX+uSnSgGtqMNipzIJzlIUQtLE65YLUPll3X3cs91EllQtGI1nK9OZK/fhg3MQD84NZneP4zMolChnSEk5f75Owr1/MOFWXQsRi2VaMtN28E+06mtVnREkBduYy/CpW20U0CrERjbh7ThnRjULMVbte4y7YS1abw6CBLR/xWl9kXtuq+tWSwzYkjxv7gbu9kuGZHO55Ic6LLSSlRzAuj/d7l1IIgCqv/o+guw9x8wORSaYKNhD0+Uz4+r6nqJRpIF0jdYltWFEK1LurCSJwsS080kZb4m5rcSqtBO6Zv5m+WWyEwGMs2VcBEB4x9SsZCb8XwFXazHKU4pGaUyEjPM="
 
-# 检查公钥是否为空
+# 提示用户输入公钥
+read -p "请输入您的公钥（按回车使用默认公钥）: " user_pubkey
+
+# 检查用户是否输入了公钥
 if [ -z "$user_pubkey" ]; then
-  echo "公钥不能为空。"
-  exit 1
+  user_pubkey="$default_pubkey"
 fi
 
 # 使用正则表达式验证公钥格式
